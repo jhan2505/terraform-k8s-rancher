@@ -1,0 +1,72 @@
+# =============================================================================
+# Terraform Variables Example
+# =============================================================================
+
+# Copy this file to terraform.tfvars and customize the values
+
+# =============================================================================
+# General Configuration
+# =============================================================================
+
+project_name = "eventim-devops"
+environment  = "dev"
+aws_region   = "us-west-2"
+
+# =============================================================================
+# VPC Configuration
+# =============================================================================
+
+vpc_cidr = "10.0.0.0/16"
+
+# =============================================================================
+# Security Configuration
+# =============================================================================
+
+# IMPORTANT: Replace with your actual IP address for security
+allowed_ssh_ips = [
+  "YOUR_IP_ADDRESS/32",  # Replace with your IP
+  "203.0.113.0/24"       # Additional IPs if needed
+]
+
+# =============================================================================
+# EKS Configuration
+# =============================================================================
+
+cluster_version           = "1.33"
+node_group_instance_types = ["t3.medium"]
+node_group_desired_size   = 2
+node_group_max_size       = 4
+node_group_min_size       = 1
+
+# =============================================================================
+# Rancher Configuration
+# =============================================================================
+
+rancher_hostname = "rancher.local"
+rancher_password = "admin123!"  # Change this to a secure password
+
+# =============================================================================
+# Public Access Configuration (Optional)
+# =============================================================================
+
+# Enable public access via ALB
+enable_public_access = false
+
+# Domain configuration (optional - if not provided, uses ALB DNS)
+rancher_domain      = ""  # Your domain for Rancher (e.g., rancher.example.com)
+route53_zone_id     = ""  # Your Route 53 hosted zone ID
+
+# SSL configuration (optional - requires domain)
+enable_ssl = false
+
+# =============================================================================
+# Common Tags
+# =============================================================================
+
+common_tags = {
+  Project     = "EventimDevOps"
+  Environment = "dev"
+  ManagedBy   = "Terraform"
+  Owner       = "DevOps Team"
+  CostCenter  = "Engineering"
+}

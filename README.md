@@ -87,8 +87,8 @@ terraform destroy
 │  │   Subnets       │    │   Subnets       │                    │
 │  │                 │    │                 │                    │
 │  │  ┌───────────┐  │    │  ┌───────────┐  │                    │
-│  │  │    ALB    │  │    │  │   EKS     │  │                    │
-│  │  │  (HTTPS)  │  │    │  │  Nodes    │  │                    │
+│  │  │    NLB    │  │    │  │   EKS     │  │                    │
+│  │  │ (NGINX)   │  │    │  │  Nodes    │  │                    │
 │  │  └───────────┘  │    │  └───────────┘  │                    │
 │  │                 │    │                 │                    │
 │  │  ┌───────────┐  │    │  ┌───────────┐  │                    │
@@ -335,39 +335,23 @@ terraform apply
 
 ### **Configuration Options**
 
-#### **1. Minimal Configuration (ALB DNS Only)**
+#### **1. Local Access Only (Default)**
 ```hcl
 # terraform.tfvars
-enable_public_access = true
-# No domain, no SSL
+enable_public_access = false
 ```
-- ✅ **Advantages**: Simple, fast, no additional costs
-- ✅ **URL**: http://[ALB_DNS]
-- ❌ **Disadvantages**: Long URL, no SSL
+- ✅ **Advantages**: Most secure, no additional costs
+- ✅ **Access**: `kubectl port-forward` to localhost
+- ❌ **Disadvantages**: Only accessible from local machine
 
-#### **2. Configuration with Domain (No SSL)**
+#### **2. Public Access (NGINX Ingress NLB)**
 ```hcl
 # terraform.tfvars
 enable_public_access = true
-rancher_domain      = "rancher.your-domain.com"
-route53_zone_id     = "Z1234567890ABC"
-# No SSL
 ```
-- ✅ **Advantages**: Custom URL, easy to remember
-- ✅ **URL**: http://rancher.your-domain.com
-- ❌ **Disadvantages**: No SSL (HTTP)
-
-#### **3. Complete Configuration (With SSL)**
-```hcl
-# terraform.tfvars
-enable_public_access = true
-rancher_domain      = "rancher.your-domain.com"
-route53_zone_id     = "Z1234567890ABC"
-enable_ssl          = true
-```
-- ✅ **Advantages**: Custom URL, automatic SSL, production-ready
-- ✅ **URL**: https://rancher.your-domain.com
-- ❌ **Disadvantages**: More complex, requires domain
+- ✅ **Advantages**: Public access, simple configuration, cost-effective
+- ✅ **URL**: https://[NLB_DNS] (via NGINX Ingress)
+- ❌ **Disadvantages**: Long URL, self-signed certificate
 
 ### Main Variables
 
@@ -380,6 +364,7 @@ enable_ssl          = true
 | `node_group_instance_types` | Instance types | `["t3.medium"]` |
 | `rancher_hostname` | Rancher hostname | `rancher.local` |
 | `rancher_password` | Admin password | `admin123!` |
+| `enable_public_access` | Enable public access via NLB | `false` |
 
 
 
@@ -404,8 +389,7 @@ enable_ssl          = true
 
 ### **Rancher Module**
 - Rancher deployment via Helm
-- NGINX Ingress Controller
-- SSL/TLS configuration with Let's Encrypt
+- NGINX Ingress Controller with NLB
 - Secret for admin password
 
 

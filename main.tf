@@ -67,11 +67,10 @@ module "vpc" {
 module "security_groups" {
   source = "./modules/security-groups"
 
-  project_name    = var.project_name
-  environment     = var.environment
-  vpc_id          = module.vpc.vpc_id
-  allowed_ssh_ips = var.allowed_ssh_ips
-  common_tags     = var.common_tags
+  project_name = var.project_name
+  environment  = var.environment
+  vpc_id       = module.vpc.vpc_id
+  common_tags  = var.common_tags
 }
 
 # =============================================================================
@@ -114,22 +113,7 @@ module "rancher" {
 }
 
 # =============================================================================
-# ALB Module (Optional - for public access to Rancher)
+# ALB Module - REMOVED
 # =============================================================================
-
-module "alb" {
-  count = var.enable_public_access ? 1 : 0
-  source = "./modules/alb"
-
-  project_name           = var.project_name
-  environment            = var.environment
-  vpc_id                 = module.vpc.vpc_id
-  public_subnet_ids      = module.vpc.public_subnet_ids
-  eks_security_group_id  = module.eks.cluster_security_group_id
-  rancher_domain         = var.rancher_domain
-  route53_zone_id        = var.route53_zone_id
-  enable_ssl             = var.enable_ssl
-  common_tags            = var.common_tags
-
-  depends_on = [module.rancher]
-}
+# ALB module has been removed to simplify the architecture.
+# Only NGINX Ingress NLB is used for public access to Rancher.

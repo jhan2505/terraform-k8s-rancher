@@ -111,55 +111,9 @@ resource "aws_security_group_rule" "eks_nodes_ingress_self" {
   description       = "Allow EKS nodes to communicate with each other"
 }
 
-# Allow SSH access from specified IPs
-resource "aws_security_group_rule" "eks_nodes_ingress_ssh" {
-  count             = length(var.allowed_ssh_ips)
-  type              = "ingress"
-  from_port         = 22
-  to_port           = 22
-  protocol          = "tcp"
-  cidr_blocks       = [var.allowed_ssh_ips[count.index]]
-  security_group_id = aws_security_group.eks_nodes.id
-  description       = "Allow SSH access from specified IPs"
-}
-
 # =============================================================================
-# Rancher Load Balancer Security Group (for future use)
+# Security Groups Cleaned Up
 # =============================================================================
-
-resource "aws_security_group" "rancher_lb" {
-  name_prefix = "${var.project_name}-${var.environment}-rancher-lb-"
-  vpc_id      = var.vpc_id
-
-  # Allow HTTP traffic
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-    description = "Allow HTTP traffic"
-  }
-
-  # Allow HTTPS traffic
-  ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-    description = "Allow HTTPS traffic"
-  }
-
-  # Allow all outbound traffic
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags = merge(var.common_tags, {
-    Name = "${var.project_name}-${var.environment}-rancher-lb-sg"
-    Type = "Security Group"
-    Tier = "Load Balancer"
-  })
-}
+# Removed unused security groups:
+# - SSH access (nodes are in private subnets)
+# - Rancher Load Balancer (using NGINX Ingress NLB)

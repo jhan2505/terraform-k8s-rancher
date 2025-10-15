@@ -12,7 +12,4 @@ output "eks_nodes_security_group_id" {
   value       = aws_security_group.eks_nodes.id
 }
 
-output "rancher_lb_security_group_id" {
-  description = "ID of the Rancher load balancer security group"
-  value       = aws_security_group.rancher_lb.id
-}
+# Removed rancher_lb_security_group_id output - not used

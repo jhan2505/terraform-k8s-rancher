@@ -19,14 +19,9 @@ aws_region   = "us-west-2"
 vpc_cidr = "10.0.0.0/16"
 
 # =============================================================================
-# Security Configuration
+# Security Configuration - REMOVED
 # =============================================================================
-
-# IMPORTANT: Replace with your actual IP address for security
-allowed_ssh_ips = [
-  "YOUR_IP_ADDRESS/32",  # Replace with your IP
-  "203.0.113.0/24"       # Additional IPs if needed
-]
+# Removed allowed_ssh_ips - not needed since nodes are in private subnets
 
 # =============================================================================
 # EKS Configuration
@@ -49,15 +44,8 @@ rancher_password = "admin123!"  # Change this to a secure password
 # Public Access Configuration (Optional)
 # =============================================================================
 
-# Enable public access via ALB
+# Enable public access via NGINX Ingress NLB
 enable_public_access = false
-
-# Domain configuration (optional - if not provided, uses ALB DNS)
-rancher_domain      = ""  # Your domain for Rancher (e.g., rancher.example.com)
-route53_zone_id     = ""  # Your Route 53 hosted zone ID
-
-# SSL configuration (optional - requires domain)
-enable_ssl = false
 
 # =============================================================================
 # Common Tags

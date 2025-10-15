@@ -35,14 +35,9 @@ variable "vpc_cidr" {
 }
 
 # =============================================================================
-# Security Configuration
+# Security Configuration - REMOVED
 # =============================================================================
-
-variable "allowed_ssh_ips" {
-  description = "List of IP addresses allowed to SSH"
-  type        = list(string)
-  default     = ["0.0.0.0/0"] # Change this to your IP for security
-}
+# Removed allowed_ssh_ips variable - not needed since nodes are in private subnets
 
 # =============================================================================
 # EKS Configuration
@@ -100,25 +95,7 @@ variable "rancher_password" {
 # =============================================================================
 
 variable "enable_public_access" {
-  description = "Enable public access to Rancher via ALB"
-  type        = bool
-  default     = false
-}
-
-variable "rancher_domain" {
-  description = "Domain name for Rancher (optional, e.g., rancher.example.com)"
-  type        = string
-  default     = ""
-}
-
-variable "route53_zone_id" {
-  description = "Route 53 hosted zone ID for DNS management (optional)"
-  type        = string
-  default     = ""
-}
-
-variable "enable_ssl" {
-  description = "Enable SSL/TLS for Rancher (requires domain)"
+  description = "Enable public access to Rancher via NGINX Ingress NLB"
   type        = bool
   default     = false
 }

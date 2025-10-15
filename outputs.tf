@@ -56,7 +56,7 @@ output "cluster_certificate_authority_data" {
 
 output "rancher_url" {
   description = "URL to access Rancher UI"
-  value       = var.enable_public_access ? module.alb[0].rancher_url : module.rancher.rancher_url
+  value       = var.enable_public_access ? "Use NGINX Ingress Load Balancer (see rancher_public_access_instructions)" : "Use port-forward (see rancher_access_instructions)"
 }
 
 output "rancher_admin_password" {
@@ -66,23 +66,10 @@ output "rancher_admin_password" {
 }
 
 # =============================================================================
-# ALB Outputs (when public access is enabled)
+# ALB Outputs - REMOVED
 # =============================================================================
-
-output "alb_dns_name" {
-  description = "DNS name of the Application Load Balancer"
-  value       = var.enable_public_access ? module.alb[0].alb_dns_name : null
-}
-
-output "alb_arn" {
-  description = "ARN of the Application Load Balancer"
-  value       = var.enable_public_access ? module.alb[0].alb_arn : null
-}
-
-output "ssl_certificate_arn" {
-  description = "ARN of the SSL certificate"
-  value       = var.enable_public_access ? module.alb[0].ssl_certificate_arn : null
-}
+# ALB outputs have been removed as the ALB module is no longer used.
+# Only NGINX Ingress NLB is used for public access to Rancher.
 
 # =============================================================================
 # Connection Information

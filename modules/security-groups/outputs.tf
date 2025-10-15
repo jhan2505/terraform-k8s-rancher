@@ -12,4 +12,3 @@ output "eks_nodes_security_group_id" {
   value       = aws_security_group.eks_nodes.id
 }
 
-# Removed rancher_lb_security_group_id output - not used

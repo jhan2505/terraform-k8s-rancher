@@ -112,8 +112,3 @@ resource "aws_security_group_rule" "eks_nodes_ingress_self" {
 }
 
 # =============================================================================
-# Security Groups Cleaned Up
-# =============================================================================
-# Removed unused security groups:
-# - SSH access (nodes are in private subnets)
-# - Rancher Load Balancer (using NGINX Ingress NLB)

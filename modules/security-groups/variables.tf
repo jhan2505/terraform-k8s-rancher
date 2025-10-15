@@ -17,7 +17,6 @@ variable "vpc_id" {
   type        = string
 }
 
-# Removed allowed_ssh_ips variable - not needed since nodes are in private subnets
 
 variable "common_tags" {
   description = "Common tags to apply to all resources"

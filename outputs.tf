@@ -66,9 +66,6 @@ output "rancher_admin_password" {
 }
 
 # =============================================================================
-# ALB Outputs - REMOVED
-# =============================================================================
-# ALB outputs have been removed as the ALB module is no longer used.
 # Only NGINX Ingress NLB is used for public access to Rancher.
 
 # =============================================================================

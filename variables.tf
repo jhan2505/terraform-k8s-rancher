@@ -35,9 +35,6 @@ variable "vpc_cidr" {
 }
 
 # =============================================================================
-# Security Configuration - REMOVED
-# =============================================================================
-# Removed allowed_ssh_ips variable - not needed since nodes are in private subnets
 
 # =============================================================================
 # EKS Configuration

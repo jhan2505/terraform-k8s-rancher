@@ -113,7 +113,4 @@ module "rancher" {
 }
 
 # =============================================================================
-# ALB Module - REMOVED
-# =============================================================================
-# ALB module has been removed to simplify the architecture.
 # Only NGINX Ingress NLB is used for public access to Rancher.
